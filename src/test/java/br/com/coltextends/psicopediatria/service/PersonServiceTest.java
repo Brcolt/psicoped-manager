@@ -14,6 +14,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.persistence.EntityNotFoundException;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
@@ -33,16 +36,34 @@ public class PersonServiceTest {
     void whenAValidPersonIsInformedThemnItShouldBeCreated() throws EntityNotFoundException {
 
         //Given
-        PersonDTO expectePersonDTO = PersonDTOBuilder.builder().build().toPersonDTO();
-        Person expectedSavedPerson = personMapper.toModel(expectePersonDTO);
+        PersonDTO expectedPersonDTO = PersonDTOBuilder.builder().build().toPersonDTO();
+        Person expectedSavedPerson = personMapper.toModel(expectedPersonDTO);
 
         //when
         when(personRepository.save(expectedSavedPerson)).thenReturn(expectedSavedPerson);
 
         //then
-        PersonDTO createdPersonDTO = personService.createPerson(expectePersonDTO);
-        assertThat(createdPersonDTO.getId(), is(equalTo(expectePersonDTO.getId())));
+        PersonDTO createdPersonDTO = personService.create(expectedPersonDTO);
+        assertThat(createdPersonDTO.getId(), is(equalTo(expectedPersonDTO.getId())));
         verify(personRepository, times(1)).save(expectedSavedPerson);
 
+    }
+
+    @Test
+    void whenPersonIsSearchThenItShouldBeShowed() throws EntityNotFoundException {
+
+        //Given
+        PersonDTO expectedPersonDTO = PersonDTOBuilder.builder().build().toPersonDTO();
+        Person expectedFoundPerson = personMapper.toModel(expectedPersonDTO);
+
+
+        //when
+        when(personRepository.findAll()).thenReturn(Collections.singletonList(expectedFoundPerson));
+
+        //Then
+        List<PersonDTO> foundedPersonsDTO = personService.listAll();
+        verify(personRepository, times(1)).findAll();
+        assertThat(foundedPersonsDTO, is(not(empty())));
+        assertThat(foundedPersonsDTO.get(0), equalTo(expectedPersonDTO));
     }
 }

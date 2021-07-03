@@ -51,7 +51,7 @@ public class PersonControllerTest {
         PersonDTO personDTO = PersonDTOBuilder.builder().build().toPersonDTO();
 
         //when
-        when(personService.createPerson(personDTO)).thenReturn(personDTO);
+        when(personService.create(personDTO)).thenReturn(personDTO);
 
         //then
         mockMvc.perform(post(API_URL_PATH)
