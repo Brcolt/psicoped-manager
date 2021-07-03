@@ -16,10 +16,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import static org.hamcrest.core.Is.is;
+import java.util.Collections;
+
 import static br.com.coltextends.psicopediatria.utils.JsonConvertUtils.asJsonString;
+import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -59,5 +62,21 @@ public class PersonControllerTest {
                 .content(asJsonString(personDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", is(personDTO.getName())));
+    }
+
+    @Test
+    void whenGETIsCalledWithNoParametersThenAOkStatusIsReturned() throws Exception {
+
+        //Given
+        PersonDTO personDTO = PersonDTOBuilder.builder().build().toPersonDTO();
+
+        //when
+        when(personService.listAll()).thenReturn(Collections.singletonList(personDTO));
+
+        //then
+        mockMvc.perform(get(API_URL_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(personDTO)))
+                .andExpect(status().isOk());
     }
 }
