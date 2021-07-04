@@ -16,6 +16,7 @@ import javax.persistence.EntityNotFoundException;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -23,6 +24,8 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PersonServiceTest {
+
+    private final static Long VALID_ID = 1L;
 
     @Mock
     private PersonRepository personRepository;
@@ -65,5 +68,22 @@ public class PersonServiceTest {
         verify(personRepository, times(1)).findAll();
         assertThat(foundedPersonsDTO, is(not(empty())));
         assertThat(foundedPersonsDTO.get(0), equalTo(expectedPersonDTO));
+    }
+
+    @Test
+    void whenPersonWithAValidIdIsSearchedThenItShouldBeShowed() throws EntityNotFoundException {
+
+        //given
+        PersonDTO personDTO = PersonDTOBuilder.builder().build().toPersonDTO();
+        Person person = personMapper.toModel(personDTO);
+
+        //when
+        when(personRepository.findById(personDTO.getId())).thenReturn(Optional.of(person));
+
+        //then
+        PersonDTO foundedPersonDTO = personService.findById(personDTO.getId());
+
+        verify(personRepository, times(1)).findById(VALID_ID);
+        assertThat(foundedPersonDTO.getId(), is(equalTo(personDTO.getId())));
     }
 }

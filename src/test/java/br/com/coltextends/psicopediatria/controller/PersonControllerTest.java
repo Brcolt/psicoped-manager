@@ -31,6 +31,8 @@ public class PersonControllerTest {
 
     private static final String API_URL_PATH = "/api/v1/persons";
 
+    private static final Long VALID_ID = 1L;
+
     private MockMvc mockMvc;
 
     @Mock
@@ -75,6 +77,23 @@ public class PersonControllerTest {
 
         //then
         mockMvc.perform(get(API_URL_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(personDTO)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void whenGETIsCalledWithValidIdThenOkStatusIsReturned() throws Exception {
+
+        //Given
+        PersonDTO personDTO = PersonDTOBuilder.builder().build().toPersonDTO();
+
+        //when
+        when(personService.findById(personDTO.getId())).thenReturn(personDTO);
+
+        //then
+
+        mockMvc.perform(get(API_URL_PATH + "/" + VALID_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(personDTO)))
                 .andExpect(status().isOk());

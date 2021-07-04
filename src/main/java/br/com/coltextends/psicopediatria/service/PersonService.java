@@ -31,4 +31,9 @@ public class PersonService {
                 .collect(Collectors.toList());
     }
 
+    public PersonDTO findById(Long idPerson) {
+        Person person = personRepository.findById(idPerson).orElseThrow(RuntimeException::new);
+        return personMapper.toDTO(person);
+    }
+
 }
