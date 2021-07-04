@@ -37,4 +37,8 @@ public class PersonController {
         return personService.findById(id);
     }
 
+    @GetMapping("/name")
+    @ResponseStatus(HttpStatus.OK)
+    public PersonDTO findByName(@RequestParam String name) { return personService.findByName(name);}
+
 }

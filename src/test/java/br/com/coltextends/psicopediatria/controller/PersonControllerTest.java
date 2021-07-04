@@ -98,4 +98,21 @@ public class PersonControllerTest {
                 .content(asJsonString(personDTO)))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void whenGETIsCalledWithValidNameThenOkStatusIsReturned() throws Exception {
+
+        //Given
+        PersonDTO personDTO = PersonDTOBuilder.builder().build().toPersonDTO();
+
+        //when
+        when(personService.findByName(personDTO.getName())).thenReturn(personDTO);
+
+        //then
+
+        mockMvc.perform(get(API_URL_PATH + "/name" + "?name=" + personDTO.getName())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(personDTO)))
+                .andExpect(status().isOk());
+    }
 }

@@ -85,5 +85,22 @@ public class PersonServiceTest {
 
         verify(personRepository, times(1)).findById(VALID_ID);
         assertThat(foundedPersonDTO.getId(), is(equalTo(personDTO.getId())));
+        verify(personRepository, times(1)).findById(personDTO.getId());
+    }
+
+    @Test
+    void whenPersonWithAValidNameIsSearchedTheItShouldBeShowed() throws EntityNotFoundException {
+
+        //given
+        PersonDTO personDTO = PersonDTOBuilder.builder().build().toPersonDTO();
+        Person person = personMapper.toModel(personDTO);
+
+        //when
+        when(personRepository.findByName(personDTO.getName())).thenReturn(Optional.of(person));
+
+        //then
+        PersonDTO foundedPersonDTO = personService.findByName(personDTO.getName());
+        assertThat(foundedPersonDTO.getName(), is(equalTo(personDTO.getName())));
+        verify(personRepository, times(1)).findByName(personDTO.getName());
     }
 }

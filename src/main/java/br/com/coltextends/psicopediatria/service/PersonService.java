@@ -36,4 +36,9 @@ public class PersonService {
         return personMapper.toDTO(person);
     }
 
+    public PersonDTO findByName(String name) {
+        Person person = personRepository.findByName(name).orElseThrow(RuntimeException::new);
+        return personMapper.toDTO(person);
+    }
+
 }
