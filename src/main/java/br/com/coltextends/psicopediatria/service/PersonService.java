@@ -6,7 +6,6 @@ import br.com.coltextends.psicopediatria.mappers.PersonMapper;
 import br.com.coltextends.psicopediatria.model.Person;
 import br.com.coltextends.psicopediatria.repository.PersonRepository;
 import br.com.coltextends.psicopediatria.utils.PropertyUtils;
-import com.sun.deploy.perf.DefaultPerfHelper;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
