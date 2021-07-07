@@ -19,7 +19,10 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import java.util.Collections;
 
 import static br.com.coltextends.psicopediatria.utils.JsonConvertUtils.asJsonString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
+import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -114,5 +117,25 @@ public class PersonControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(personDTO)))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void whenPOSTIsCalledWithValidIdThenOkStatusIsReturned() throws Exception {
+
+        //given
+        PersonDTO personDTO = PersonDTOBuilder.builder().build().toPersonDTO();
+
+        PersonDTO editedPersonDTO = personDTO;
+
+        editedPersonDTO.setName("Bruno Colt Ferreira do Nascimento");
+
+        //when
+        when(personService.update(VALID_ID.longValue(), editedPersonDTO)).thenReturn(editedPersonDTO);
+
+        mockMvc.perform(post(API_URL_PATH + "/edit/" + VALID_ID.longValue())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(editedPersonDTO)))
+                .andExpect(status().isCreated()).andExpect(jsonPath("$.name", is(equalTo(personDTO.getName()))));
+
     }
 }
