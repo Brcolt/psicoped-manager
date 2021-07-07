@@ -7,6 +7,7 @@ import br.com.coltextends.psicopediatria.mappers.PersonMapper;
 import br.com.coltextends.psicopediatria.model.Person;
 import br.com.coltextends.psicopediatria.repository.PersonRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -102,5 +103,23 @@ public class PersonServiceTest {
         PersonDTO foundedPersonDTO = personService.findByName(personDTO.getName());
         assertThat(foundedPersonDTO.getName(), is(equalTo(personDTO.getName())));
         verify(personRepository, times(1)).findByName(personDTO.getName());
+    }
+
+    @Test
+    void whenAValidIdAndAPersonIsInformedToUpdateThenItShouldBeUpdated() throws EntityNotFoundException {
+
+        //given
+        PersonDTO personDTO = PersonDTOBuilder.builder().build().toPersonDTO();
+        Person person = personMapper.toModel(personDTO);
+
+        //when
+        when(personRepository.findById(VALID_ID.longValue())).thenReturn(Optional.of(person));
+        personService.update(VALID_ID, personDTO);
+        personDTO = personMapper.toDTO(person);
+
+        //then
+        assertThat(personDTO.getId(), is(equalTo(person.getId())));
+        verify(personRepository, times(1)).save(person);
+
     }
 }
