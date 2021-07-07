@@ -7,6 +7,7 @@ import br.com.coltextends.psicopediatria.model.Person;
 import br.com.coltextends.psicopediatria.repository.PersonRepository;
 import br.com.coltextends.psicopediatria.utils.PropertyUtils;
 import com.sun.deploy.perf.DefaultPerfHelper;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,8 @@ public class PersonService {
                 .collect(Collectors.toList());
     }
 
-    public PersonDTO findById(Long idPerson) {
-        Person person = personRepository.findById(idPerson).orElseThrow(RuntimeException::new);
+    public PersonDTO findById(Long idPerson) throws NotFoundException {
+        Person person = verifyIfExists(idPerson);
         return personMapper.toDTO(person);
     }
 
@@ -46,13 +47,22 @@ public class PersonService {
         return personMapper.toDTO(person);
     }
 
-    public PersonDTO update(Long id, PersonDTO personDTO) {
-        PersonDTO toUpdateDTO = findById(id);
-        Person personEntity = personMapper.toModel(toUpdateDTO);
+    public PersonDTO update(Long id, PersonDTO personDTO) throws NotFoundException {
+        Person toUpdate = verifyIfExists(id);
 
-        BeanUtils.copyProperties(personDTO, personEntity, PropertyUtils.getNullPropertyNames(personDTO, (String[]) ignoredProps.toArray()));
-        personRepository.save(personEntity);
-        return personMapper.toDTO(personEntity);
+        BeanUtils.copyProperties(personDTO, toUpdate, PropertyUtils.getNullPropertyNames(personDTO, (String[]) ignoredProps.toArray()));
+        personRepository.save(toUpdate);
+        return personMapper.toDTO(toUpdate);
+    }
+
+    public void deleteById(Long id) throws NotFoundException {
+        verifyIfExists(id);
+        personRepository.deleteById(id);
+    }
+
+    private Person verifyIfExists(Long id) throws NotFoundException {
+        return personRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException());
     }
 
 }

@@ -2,6 +2,7 @@ package br.com.coltextends.psicopediatria.controller;
 
 import br.com.coltextends.psicopediatria.DTO.PersonDTO;
 import br.com.coltextends.psicopediatria.service.PersonService;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class PersonController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public PersonDTO findById(@PathVariable Long id) {
+    public PersonDTO findById(@PathVariable Long id) throws NotFoundException {
         return personService.findById(id);
     }
 
@@ -42,7 +43,13 @@ public class PersonController {
     @PostMapping("/edit/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public PersonDTO update(@PathVariable Long id,
-                            @RequestBody PersonDTO personDTO) {
+                            @RequestBody PersonDTO personDTO) throws NotFoundException {
         return personService.update(id, personDTO);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void delete(@PathVariable Long id) throws NotFoundException {
+        personService.deleteById(id);
     }
 }

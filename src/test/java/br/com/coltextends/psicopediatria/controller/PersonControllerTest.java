@@ -24,8 +24,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -136,6 +135,21 @@ public class PersonControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(editedPersonDTO)))
                 .andExpect(status().isCreated()).andExpect(jsonPath("$.name", is(equalTo(personDTO.getName()))));
+    }
+
+    @Test
+    void whenDELETEIsCalledWithValidIdThenNotFoundIsReturned() throws Exception {
+
+        //given
+        PersonDTO personDTO = PersonDTOBuilder.builder().build().toPersonDTO();
+
+        //when
+
+        //then
+        mockMvc.perform(delete(API_URL_PATH + "/delete/" + personDTO.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(personDTO)))
+                .andExpect(status().isNotFound());
 
     }
 }

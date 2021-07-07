@@ -6,6 +6,7 @@ import br.com.coltextends.psicopediatria.builder.PersonDTOBuilder;
 import br.com.coltextends.psicopediatria.mappers.PersonMapper;
 import br.com.coltextends.psicopediatria.model.Person;
 import br.com.coltextends.psicopediatria.repository.PersonRepository;
+import javassist.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -72,7 +73,7 @@ public class PersonServiceTest {
     }
 
     @Test
-    void whenPersonWithAValidIdIsSearchedThenItShouldBeShowed() throws EntityNotFoundException {
+    void whenPersonWithAValidIdIsSearchedThenItShouldBeShowed() throws EntityNotFoundException, NotFoundException {
 
         //given
         PersonDTO personDTO = PersonDTOBuilder.builder().build().toPersonDTO();
@@ -106,7 +107,7 @@ public class PersonServiceTest {
     }
 
     @Test
-    void whenAValidIdAndAPersonIsInformedToUpdateThenItShouldBeUpdated() throws EntityNotFoundException {
+    void whenAValidIdAndAPersonIsInformedToUpdateThenItShouldBeUpdated() throws EntityNotFoundException, NotFoundException {
 
         //given
         PersonDTO personDTO = PersonDTOBuilder.builder().build().toPersonDTO();
@@ -121,5 +122,23 @@ public class PersonServiceTest {
         assertThat(personDTO.getId(), is(equalTo(person.getId())));
         verify(personRepository, times(1)).save(person);
 
+    }
+
+    @Test
+    void whenAValidIdIsInformedThenItShouldBeDeleted() throws EntityNotFoundException, NotFoundException {
+
+        //given
+        PersonDTO personDTO = PersonDTOBuilder.builder().build().toPersonDTO();
+        Person person = personMapper.toModel(personDTO);
+
+        //when
+        when(personRepository.findById(personDTO.getId())).thenReturn(Optional.of(person));
+        doNothing().when(personRepository).deleteById(person.getId());
+
+        //then
+        personService.deleteById(person.getId());
+
+        verify(personRepository, times(1)).findById(personDTO.getId());
+        verify(personRepository, times(1)).deleteById(person.getId());
     }
 }
