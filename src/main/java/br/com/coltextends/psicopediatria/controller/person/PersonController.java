@@ -1,4 +1,4 @@
-package br.com.coltextends.psicopediatria.controller;
+package br.com.coltextends.psicopediatria.controller.person;
 
 import br.com.coltextends.psicopediatria.DTO.PersonDTO;
 import br.com.coltextends.psicopediatria.service.PersonService;
@@ -36,9 +36,9 @@ public class PersonController {
         return personService.findById(id);
     }
 
-    @GetMapping("/name")
+    @GetMapping("/name/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public PersonDTO findByName(@RequestParam String name) { return personService.findByName(name);}
+    public PersonDTO findByName(@PathVariable String name) { return personService.findByName(name);}
 
     @PostMapping("/edit/{id}")
     @ResponseStatus(HttpStatus.CREATED)

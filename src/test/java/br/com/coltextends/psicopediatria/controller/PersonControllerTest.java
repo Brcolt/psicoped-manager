@@ -3,6 +3,7 @@ package br.com.coltextends.psicopediatria.controller;
 
 import br.com.coltextends.psicopediatria.DTO.PersonDTO;
 import br.com.coltextends.psicopediatria.builder.PersonDTOBuilder;
+import br.com.coltextends.psicopediatria.controller.person.PersonController;
 import br.com.coltextends.psicopediatria.service.PersonService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -112,7 +113,7 @@ public class PersonControllerTest {
 
         //then
 
-        mockMvc.perform(get(API_URL_PATH + "/name" + "?name=" + personDTO.getName())
+        mockMvc.perform(get(API_URL_PATH + "/name/" + personDTO.getName())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(personDTO)))
                 .andExpect(status().isOk());
