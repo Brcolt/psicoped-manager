@@ -1,4 +1,4 @@
-package br.com.coltextends.psicopediatria.controller.person;
+package br.com.coltextends.psicopediatria.controller;
 
 import br.com.coltextends.psicopediatria.DTO.PersonDTO;
 import br.com.coltextends.psicopediatria.service.PersonService;

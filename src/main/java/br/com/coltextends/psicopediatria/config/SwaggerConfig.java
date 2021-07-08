@@ -16,7 +16,7 @@ import static springfox.documentation.builders.RequestHandlerSelectors.*;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    private static final String BASE_PACKAGE = "br.com.contextends.psicopediatria";
+    private static final String BASE_PACKAGE = "br.com.coltextends.psicopediatria.controller";
     private static final String API_TITLE = "PsyscoPed Manager";
     private static final String API_DESCRIPTION = "REST API for patient management";
     private static final String CONTACT_NAME = "Bruno Colt";

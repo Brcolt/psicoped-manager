@@ -1,4 +1,4 @@
-package br.com.coltextends.psicopediatria.controller.person;
+package br.com.coltextends.psicopediatria.controller;
 
 
 import br.com.coltextends.psicopediatria.DTO.PersonDTO;
@@ -51,7 +51,4 @@ public interface PersonControllerDocs {
             @ApiResponse(code = 404, message = "Person not founded")
     })
     void delete(@PathVariable Long id);
-
-
-
 }
