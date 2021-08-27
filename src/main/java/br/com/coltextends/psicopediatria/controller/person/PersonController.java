@@ -1,6 +1,6 @@
-package br.com.coltextends.psicopediatria.controller;
+package br.com.coltextends.psicopediatria.controller.person;
 
-import br.com.coltextends.psicopediatria.DTO.PersonDTO;
+import br.com.coltextends.psicopediatria.dto.PersonDTO;
 import br.com.coltextends.psicopediatria.service.PersonService;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;

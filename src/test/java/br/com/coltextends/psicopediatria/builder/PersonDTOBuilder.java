@@ -1,7 +1,7 @@
 package br.com.coltextends.psicopediatria.builder;
 
 
-import br.com.coltextends.psicopediatria.DTO.PersonDTO;
+import br.com.coltextends.psicopediatria.dto.PersonDTO;
 import br.com.coltextends.psicopediatria.enums.GenderEnum;
 import lombok.Builder;
 

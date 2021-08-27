@@ -1,7 +1,8 @@
 package br.com.coltextends.psicopediatria.controller;
 
 
-import br.com.coltextends.psicopediatria.DTO.PersonDTO;
+import br.com.coltextends.psicopediatria.controller.person.PersonController;
+import br.com.coltextends.psicopediatria.dto.PersonDTO;
 import br.com.coltextends.psicopediatria.builder.PersonDTOBuilder;
 import br.com.coltextends.psicopediatria.service.PersonService;
 import org.junit.jupiter.api.BeforeEach;

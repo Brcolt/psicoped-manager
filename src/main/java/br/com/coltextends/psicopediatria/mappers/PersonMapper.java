@@ -1,7 +1,7 @@
 package br.com.coltextends.psicopediatria.mappers;
 
 
-import br.com.coltextends.psicopediatria.DTO.PersonDTO;
+import br.com.coltextends.psicopediatria.dto.PersonDTO;
 import br.com.coltextends.psicopediatria.model.Person;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

@@ -1,4 +1,4 @@
-package br.com.coltextends.psicopediatria.DTO;
+package br.com.coltextends.psicopediatria.dto;
 
 
 import br.com.coltextends.psicopediatria.enums.GenderEnum;

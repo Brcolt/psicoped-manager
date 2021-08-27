@@ -1,14 +1,13 @@
 package br.com.coltextends.psicopediatria.service;
 
 
-import br.com.coltextends.psicopediatria.DTO.PersonDTO;
+import br.com.coltextends.psicopediatria.dto.PersonDTO;
 import br.com.coltextends.psicopediatria.builder.PersonDTOBuilder;
 import br.com.coltextends.psicopediatria.mappers.PersonMapper;
 import br.com.coltextends.psicopediatria.model.Person;
 import br.com.coltextends.psicopediatria.repository.PersonRepository;
 import javassist.NotFoundException;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

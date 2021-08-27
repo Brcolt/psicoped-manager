@@ -1,7 +1,7 @@
-package br.com.coltextends.psicopediatria.controller;
+package br.com.coltextends.psicopediatria.controller.person;
 
 
-import br.com.coltextends.psicopediatria.DTO.PersonDTO;
+import br.com.coltextends.psicopediatria.dto.PersonDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

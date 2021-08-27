@@ -1,7 +1,7 @@
 package br.com.coltextends.psicopediatria.service;
 
 
-import br.com.coltextends.psicopediatria.DTO.PersonDTO;
+import br.com.coltextends.psicopediatria.dto.PersonDTO;
 import br.com.coltextends.psicopediatria.mappers.PersonMapper;
 import br.com.coltextends.psicopediatria.model.Person;
 import br.com.coltextends.psicopediatria.repository.PersonRepository;
